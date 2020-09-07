@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
 
     if (!req.query.color) {
       res.send(
-        `Specify the URL param \`color\` to get started, by adding the following to the end of this URL: \`?color=blue\`. Color can be a CSS color like \`blue\`, a hex code like \`#00ff00\`, or an RGB color like \`rgb(0,255,0)\`. You can also specify the params \`width\` and \`height\` to get an image with certain dimensions. Width defaults to ${defaultWidth}, and maxes out at ${maxWidth}. Height defaults to ${defaultHeight}, and maxes out at ${maxHeight}.`
+        `Usage: "/color/blue", "/color/#00ff00", or "/color/rgb(0,255,0)". To specify a size, use "/color/(your color)/(width in px)/(height in px)". Width defaults to ${defaultWidth}, and maxes out at ${maxWidth}. Height defaults to ${defaultHeight}, and maxes out at ${maxHeight}.`
       );
       return true;
     }
