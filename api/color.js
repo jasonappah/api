@@ -1,4 +1,5 @@
-const puppeteer = require("puppeteer");
+const chrome = require('chrome-aws-lambda');
+const puppeteer = require('puppeteer-core');
 const maxWidth = 4096;
 const maxHeight = 4096;
 const defaultWidth = 1920;
