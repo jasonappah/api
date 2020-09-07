@@ -59,6 +59,8 @@ module.exports = async (req, res) => {
     );
     res.end(file);
   } catch (e) {
+    console.log("AN ERROR! UH OH! AN ERROR! UH OH! AN ERROR! UH OH! AN ERROR! UH OH! AN ERROR! UH OH!")
+    console.log(e)
     res.send(e);
   }
 };
