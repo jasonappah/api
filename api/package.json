@@ -1,0 +1,13 @@
+{
+  "name": "api",
+  "version": "0.0.1",
+  "description": "Misc. personal services.",
+  "main": "index.js",
+  "repository": "github.com/jasonappah/api",
+  "author": "Jason Antwi-Appah",
+  "license": "MIT",
+  "dependencies": {
+    "prettier": "^2.1.1",
+    "puppeteer": "^5.2.1"
+  }
+}
