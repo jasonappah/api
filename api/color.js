@@ -1,13 +1,12 @@
-const chrome = require('chrome-aws-lambda');
-const puppeteer = require('puppeteer-core');
+const puppeteer = require("puppeteer");
 const maxWidth = 4096;
 const maxHeight = 4096;
 const defaultWidth = 1920;
 const defaultHeight = 1080;
 
-async function thing(req, res) {
-  var width, height;
 
+module.exports = async (req, res) => {
+  var width, height;
   const browser = await puppeteer.launch();
 
   if (!req.query.color) {
@@ -60,8 +59,4 @@ async function thing(req, res) {
     `public, immutable, no-transform, s-maxage=31536000, max-age=31536000`
   );
   res.end(file);
-}
-
-module.exports = (req, res) => {
-  thing(req, res);
 };
