@@ -64,6 +64,13 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
+chrome-aws-lambda@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/chrome-aws-lambda/-/chrome-aws-lambda-5.2.1.tgz#98ad35aa471df4d547b29c56668c485b937d1a17"
+  integrity sha512-str1ip6pTu9TvCcQyQ/zdYLfQk+ugVVlLf7Gus6peR4PA6Mn3hZBt/eHwgIp/FJ+nY/BIY1jiCYcxpuDjHZWuw==
+  dependencies:
+    lambdafs "^2.0.0"
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -168,6 +175,13 @@ inherits@2, inherits@^2.0.3, inherits@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
+
+lambdafs@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/lambdafs/-/lambdafs-2.0.0.tgz#41c982486cdf5357d6ae447c47506e7b01952c40"
+  integrity sha512-aLZoFHQGOj1gShKC8xjbVcxkSVMTav6kN/+bAJ/ORTWzTA+TeUKZRjzIIFFER5wUHd2FyJd3KygdFJobH2I9cg==
+  dependencies:
+    tar-fs "^2.1.0"
 
 locate-path@^5.0.0:
   version "5.0.0"
@@ -310,7 +324,7 @@ string_decoder@^1.1.1:
   dependencies:
     safe-buffer "~5.2.0"
 
-tar-fs@^2.0.0:
+tar-fs@^2.0.0, tar-fs@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-2.1.0.tgz#d1cdd121ab465ee0eb9ccde2d35049d3f3daf0d5"
   integrity sha512-9uW5iDvrIMCVpvasdFHW0wJPez0K4JnMZtsuIeDI7HyMGJNxmDZDOCQROr7lXyS+iL/QMpj07qcjGYTSdRFXUg==

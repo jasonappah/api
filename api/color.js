@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+const chrome = require("chrome-aws-lambda");
 const maxWidth = 4096;
 const maxHeight = 4096;
 const defaultWidth = 1920;
@@ -7,7 +7,13 @@ const defaultHeight = 1080;
 module.exports = async (req, res) => {
   try {
     var width, height;
-    const browser = await puppeteer.launch();
+
+    const object = {
+      args: chrome.args,
+      executablePath: await chrome.executablePath,
+      headless: true,
+    };
+    const browser = await chrome.puppeteer.launch(object);
 
     if (!req.query.color) {
       res.send(
@@ -59,8 +65,10 @@ module.exports = async (req, res) => {
     );
     res.end(file);
   } catch (e) {
-    console.log("AN ERROR! UH OH! AN ERROR! UH OH! AN ERROR! UH OH! AN ERROR! UH OH! AN ERROR! UH OH!")
-    console.log(e)
-    res.send(e);
+    console.log(
+      "AN ERROR! UH OH! AN ERROR! UH OH! AN ERROR! UH OH! AN ERROR! UH OH! AN ERROR! UH OH!"
+    );
+    console.log(e);
+    res.json({ error: e });
   }
 };
