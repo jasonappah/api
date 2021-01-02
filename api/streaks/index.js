@@ -9,7 +9,7 @@ const user = "jasonappah"
 
 module.exports = async (req, res) => {res.send("soon come.")}
 
-function committedToday() {
+function recentCommits() {
     octokit.activity
         .listPublicEventsForUser({
             username: user
@@ -52,8 +52,6 @@ function committedToday() {
             return [committedToday, commits]
         })
 }
-
-committedToday()
 
 // "borrowed" from https://stackoverflow.com/a/6117889
 function getWeekNumber(d) {
