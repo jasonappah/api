@@ -15,6 +15,7 @@
     "dev": "vercel dev"
   },
   "devDependencies": {
+    "prettier": "^2.2.1",
     "vercel": "^21.0.1"
   }
 }
