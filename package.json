@@ -10,5 +10,11 @@
     "@octokit/rest": "^18.0.12",
     "chrome-aws-lambda": "^5.2.1",
     "puppeteer": "^5.2.1"
+  },
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "devDependencies": {
+    "vercel": "^21.0.1"
   }
 }
