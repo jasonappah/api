@@ -9,7 +9,8 @@
   "dependencies": {
     "@octokit/rest": "^18.0.12",
     "chrome-aws-lambda": "^5.2.1",
-    "puppeteer": "^5.2.1"
+    "puppeteer": "^5.2.1",
+    "twilio": "^3.54.1"
   },
   "scripts": {
     "dev": "vercel dev"
