@@ -13,9 +13,11 @@
     "twilio": "^3.54.1"
   },
   "scripts": {
-    "dev": "vercel dev"
+    "serve": "vercel dev",
+    "serve:twilio": "node -r dotenv/config api/streaks/twilio"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "prettier": "^2.2.1",
     "vercel": "^21.0.1"
   }

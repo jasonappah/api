@@ -1,0 +1,27 @@
+name: Check my commit streaks
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    # 8PM CST = 2AM UTC
+    - cron: 0 2 * * *
+  
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [15.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - run: yarn --frozen-lockfile
+    - run: yarn run serve:twilio
