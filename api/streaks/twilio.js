@@ -20,7 +20,7 @@ if (sid && token && sender && recipient) {
         const client = require("twilio")(sid, token)
         var message = ""
         if (committed == false) {
-            const message = `Hey! Looks like you haven't committed to GitHub today! You don't want to lose your streak of ${streak} days, do you?`
+            message = `Hey! Looks like you haven't committed to GitHub today! You don't want to lose your streak of ${streak} days, do you?`
         } else {
             message = `Congrats on committing today! You now have a streak of ${streak} days!`
         }
