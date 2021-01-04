@@ -33,4 +33,7 @@ if (sid && token && sender && recipient) {
             .then((message) => console.log(message))
             .catch((e) => console.log(e))
     })
+} else {
+    console.error("Tried to send a message, but the necessary env vars weren't set! The following vars are present in our environment.", Object.keys(process.env))
+    process.exit(1)
 }
