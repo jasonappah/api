@@ -9,6 +9,7 @@ on:
   
 jobs:
   check:
+    environment: production
     runs-on: ubuntu-latest
 
     strategy:
