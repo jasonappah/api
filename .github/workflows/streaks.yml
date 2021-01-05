@@ -9,12 +9,7 @@ on:
   
 jobs:
   check:
-    environment: production
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [15.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -22,7 +17,13 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 15.x
 
     - run: yarn --frozen-lockfile
     - run: yarn run serve:twilio
+      env:
+        TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+        TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+        TWILIO_PHONE_NO: ${{ secrets.TWILIO_PHONE_NO }}
+        RECIPIENT_PHONE_NO: ${{ secrets.RECIPIENT_PHONE_NO }}
+
