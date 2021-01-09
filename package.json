@@ -9,7 +9,9 @@
   "dependencies": {
     "@octokit/rest": "^18.0.12",
     "chrome-aws-lambda": "^5.2.1",
+    "node-fetch": "^2.6.1",
     "puppeteer": "^5.2.1",
+    "redis": "^3.0.2",
     "twilio": "^3.54.1"
   },
   "scripts": {
