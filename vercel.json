@@ -1,7 +1,6 @@
 {
   "rewrites": [
 
-    { "source": "/:method", "destination": "/api/:method" },
     { "source": "/color/:color", "destination": "/api/color" },
     { "source": "/color/:color/:width/:height", "destination": "/api/color" }
     

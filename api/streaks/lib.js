@@ -56,7 +56,6 @@ function recentCommits(callback) {
             } else {
                 callback(committedToday, commits)
             }
-            
         })
 }
 

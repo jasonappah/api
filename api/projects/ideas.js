@@ -1,19 +1,28 @@
 const redis = require("redis")
 const fetch = require("node-fetch")
+require('dotenv').config()
 
-// // this is all for caching, which will come when i have functioning code
-// const { promisify } = require("util");
-// const client = redis.createClient();
-// const getAsync = promisify(client.get).bind(client);
+const client = redis.createClient({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASS
+})
 
+// this is optional, for if you are still needing to identify the ids
+const boardId = process.env.TRELLO_BOARD_ID || ""
+
+// these are required at runtime
 const key = process.env.TRELLO_KEY || ""
 const token = process.env.TRELLO_TOKEN || ""
-const boardId = process.env.TRELLO_BOARD_ID || ""
 const listId = process.env.TRELLO_LIST_ID || ""
+const INVALIDATE_CACHE_MINS = process.env.INVALIDATE_CACHE_MINS || 15
+const REDIS_KEY = "project_ideas"
 
 module.exports = async (req, res) => {
     res.setHeader("Content-Type", "application/json")
-    res.send(JSON.stringify({msg: "literally nothing lol"}))
+    doTheDance((data) => {
+        res.send(JSON.stringify(data))
+    })
 }
 
 function getBoardId(boardName) {
@@ -25,7 +34,7 @@ function getBoardId(boardName) {
         )
 }
 
-// getBoardId("Stuff")
+// getBoardId("Your Board Name Here!")
 
 function getBoardLists() {
     const urrl = `https://api.trello.com/1/boards/${boardId}/lists?key=${key}&token=${token}`
@@ -76,5 +85,66 @@ function getAttachmentsSync(cardId, callback) {
     getAttachments(cardId).then(callback)
 }
 
-getListCardsAndAttachments(console.log)
-// getListCardsAndAttachments()
+function updateCache(callback) {
+    getListCardsAndAttachments((data) => {
+        client.set(
+            REDIS_KEY,
+            JSON.stringify({data: data, cache_time: new Date()}),
+            function () {
+                if (callback) {
+                    callback(data)
+                }
+            }
+        )
+    })
+}
+
+function getCache(callback) {
+    client.get(REDIS_KEY, function (err, res) {
+        callback(err, res)
+    })
+}
+
+function doTheDance(callback) {
+    function errRes(error) {
+        callback(
+            JSON.stringify({
+                err:
+                    error ||
+                    `There was no data set for key ${REDIS_KEY} or we had trouble getting it from the cache!`
+            })
+        )
+    }
+
+    client.get(REDIS_KEY, function (err, res) {
+        if (!err && res) {
+            const data = JSON.parse(res)
+            if (data && typeof(data) == "object") {
+                const shouldInvalidateCache =
+                    (new Date() - new Date(data.cache_time)) / 60000 >
+                    INVALIDATE_CACHE_MINS
+                if (shouldInvalidateCache) {
+                    updateCache(function (data) {
+                        if (callback) {
+                            callback(data)
+                        }
+                    })
+                } else {
+                    getCache(function (err, res) {
+                        if (!err && res) {
+                            callback(res)
+                        } else {
+                            errRes(err)
+                        }
+                    })
+                }
+            } else {
+                errRes(err)
+            }
+        } else {
+            errRes(err)
+        }
+    })
+}
+
+doTheDance()
