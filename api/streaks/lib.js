@@ -3,6 +3,13 @@ const {Octokit} = require("@octokit/rest")
 const octokit = new Octokit({
     userAgent: "jasonaa-streaks-api"
 })
+
+module.exports = async (req, res) => {
+    res.send(
+        "This file contains helpers to be imported by index.js and twilio.js - invoking it directly does nothing. To check out the source, take a look at https://jasonaa.me/g/api/tree/main/api/streaks/lib.js"
+    )
+}
+
 const tz = "America/Chicago"
 const user = "jasonappah"
 
