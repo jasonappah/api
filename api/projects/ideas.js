@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     res.setHeader("Content-Type", "application/json")
     try {
         doTheDance((data) => {
-            res.send(JSON.stringify(data))
+            res.send(data)
         })
     } catch (e) {
         res.send(JSON.stringify({err: e}))
@@ -56,26 +56,30 @@ async function getListCards() {
 
 function getListCardsAndAttachments(callback) {
     var newCards = []
-    getListCards().then((cards) => {
-        for (const c of cards) {
-            var newCard = c
-            const attachmentsPresent = newCard.badges.attachments > 0
-            if (attachmentsPresent) {
-                getAttachmentsSync(newCard.id, (val) => {
-                    newCard.attachments = val
+    getListCards()
+        .then((cards) => {
+            for (const c of cards) {
+                var newCard = c
+                const attachmentsPresent = newCard.badges.attachments > 0
+                if (attachmentsPresent) {
+                    getAttachmentsSync(newCard.id, (val) => {
+                        newCard.attachments = val
+                        newCards.push(newCard)
+                        if (newCards.length == cards.length) {
+                            callback(newCards)
+                        }
+                    })
+                } else {
                     newCards.push(newCard)
                     if (newCards.length == cards.length) {
                         callback(newCards)
                     }
-                })
-            } else {
-                newCards.push(newCard)
-                if (newCards.length == cards.length) {
-                    callback(newCards)
                 }
             }
-        }
-    })
+        })
+        .catch((err) => {
+            callback(undefined, err)
+        })
 }
 
 async function getAttachments(cardId) {
@@ -90,22 +94,23 @@ function getAttachmentsSync(cardId, callback) {
 }
 
 function updateCache(callback) {
-    getListCardsAndAttachments((data) => {
-        client.set(
-            REDIS_KEY,
-            JSON.stringify({data: data, cache_time: new Date()}),
-            function () {
+    getListCardsAndAttachments((data, err) => {
+        if (!err) {
+            const res = JSON.stringify({data: data, cache_time: new Date()})
+            client.set(REDIS_KEY, res, function () {
                 if (callback) {
-                    callback(data)
+                    callback(res)
                 }
-            }
-        )
+            })
+        } else {
+            callback(undefined, err)
+        }
     })
 }
 
-function getCache(callback) {
-    client.get(REDIS_KEY, function (err, res) {
-        callback(err, res)
+function getCache(cacheCallback) {
+    client.get(REDIS_KEY, (err, res) => {
+        cacheCallback(err, res)
     })
 }
 
@@ -128,13 +133,13 @@ function doTheDance(callback) {
                     (new Date() - new Date(data.cache_time)) / 60000 >
                     INVALIDATE_CACHE_MINS
                 if (shouldInvalidateCache) {
-                    updateCache(function (data) {
+                    updateCache(function (data, err) {
                         if (callback) {
-                            callback(data)
+                            callback(data, err)
                         }
                     })
                 } else {
-                    getCache(function (err, res) {
+                    getCache((err, res) => {
                         if (!err && res) {
                             callback(res)
                         } else {
@@ -150,5 +155,3 @@ function doTheDance(callback) {
         }
     })
 }
-
-doTheDance()
