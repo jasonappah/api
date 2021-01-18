@@ -20,9 +20,13 @@ const REDIS_KEY = "project_ideas"
 
 module.exports = async (req, res) => {
     res.setHeader("Content-Type", "application/json")
+    try {
     doTheDance((data) => {
         res.send(JSON.stringify(data))
     })
+} catch (e) {
+    res.send(JSON.stringify({"err": e}))
+}
 }
 
 function getBoardId(boardName) {
