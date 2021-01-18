@@ -1,6 +1,6 @@
 const redis = require("redis")
 const fetch = require("node-fetch")
-require('dotenv').config()
+require("dotenv").config()
 
 const client = redis.createClient({
     host: process.env.REDIS_HOST,
@@ -21,12 +21,12 @@ const REDIS_KEY = "project_ideas"
 module.exports = async (req, res) => {
     res.setHeader("Content-Type", "application/json")
     try {
-    doTheDance((data) => {
-        res.send(JSON.stringify(data))
-    })
-} catch (e) {
-    res.send(JSON.stringify({"err": e}))
-}
+        doTheDance((data) => {
+            res.send(JSON.stringify(data))
+        })
+    } catch (e) {
+        res.send(JSON.stringify({err: e}))
+    }
 }
 
 function getBoardId(boardName) {
@@ -123,7 +123,7 @@ function doTheDance(callback) {
     client.get(REDIS_KEY, function (err, res) {
         if (!err && res) {
             const data = JSON.parse(res)
-            if (data && typeof(data) == "object") {
+            if (data && typeof data == "object") {
                 const shouldInvalidateCache =
                     (new Date() - new Date(data.cache_time)) / 60000 >
                     INVALIDATE_CACHE_MINS
