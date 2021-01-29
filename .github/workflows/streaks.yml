@@ -3,9 +3,9 @@ name: Check my commit streaks
 on:
   push:
     branches: [ main ]
-  schedule:
-    # 8PM CST = 2AM UTC
-    - cron: 0 2 * * *
+#   schedule:
+#     # 8PM CST = 2AM UTC
+#     - cron: 0 2 * * *
   
 jobs:
   check:
