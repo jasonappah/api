@@ -1,8 +1,6 @@
 {
-  "rewrites": [
-
-    { "source": "/color/:color", "destination": "/api/color" },
-    { "source": "/color/:color/:width/:height", "destination": "/api/color" }
-    
-  ]
+	"rewrites": [
+		{ "source": "/color/:color", "destination": "/api/color" },
+		{ "source": "/color/:color/:width/:height", "destination": "/api/color" }
+	]
 }
