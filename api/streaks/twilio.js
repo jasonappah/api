@@ -10,7 +10,7 @@ module.exports = async (_, res) => {
 }
 
 // soon i'll implement keeping track of my streak using postgresql!
-const streak = 0
+let streak = 0
 
 lib.recentCommits((committed, _) => {
 	streak += 1
