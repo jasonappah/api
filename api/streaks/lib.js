@@ -13,7 +13,7 @@ module.exports = async (_, res) => {
 const tz = "America/Chicago"
 const user = "jasonappah"
 
-export function recentCommits(callback) {
+function recentCommits(callback) {
 	octokit.activity
 		.listPublicEventsForUser({
 			username: user
@@ -73,3 +73,5 @@ function getWeekNumber(d) {
 	// Return array of year and week number
 	return [d.getUTCFullYear(), weekNo]
 }
+
+module.exports = {recentCommits}

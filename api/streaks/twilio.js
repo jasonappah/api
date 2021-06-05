@@ -1,7 +1,7 @@
 console.log("Running...")
 
-import { recentCommits } from "./lib"
-import { sendMessage } from "../../lib/sms"
+const lib = require("./lib")
+const sms = require("../../lib/sms")
 
 module.exports = async (_, res) => {
 	res.send(
@@ -12,13 +12,13 @@ module.exports = async (_, res) => {
 // soon i'll implement keeping track of my streak using postgresql!
 const streak = 0
 
-recentCommits((committed, _) => {
+lib.recentCommits((committed, _) => {
 	streak += 1
-	var message = committed
+	const message = committed
 		? `Congrats on committing today! You now have a streak of ${streak} day${
 				streak == 1 ? "" : "s"
 		  }!`
 		: `Hey! Looks like you haven't committed to GitHub today! You don't want to lose your streak of ${streak} days, do you?`
 
-	sendMessage(message)
+	sms.sendMessage(message)
 })
