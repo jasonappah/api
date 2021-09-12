@@ -22,6 +22,7 @@
 	},
 	"scripts": {
 		"serve": "vercel dev",
+		"vercel": "vercel",
 		"serve:twilio": "ts-node -r dotenv/config api/streaks/twilio",
 		"format": "prettier --write './**/*.js' && prettier --write './**/*.ts'"
 	},

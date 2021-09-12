@@ -1,16 +1,13 @@
-import fetch from "node-fetch"
-
 import crypto from "crypto"
-const DEV = process.env.NODE_ENV === "development"
-if (DEV) {
+if (process.env.NODE_ENV === "development") {
 	require("dotenv").config()
 }
 
-const { N8N_HOOK_URL, DBX_APP_SECRET, N8N_HOOK_SECRET } = process.env
+const { DBX_APP_SECRET } = process.env
 import { VercelRequest, VercelResponse } from "@vercel/node"
 import { sendMessage } from "../../lib/sms"
 
-module.exports = async (req: VercelRequest, res: VercelResponse) => {
+export default async (req: VercelRequest, res: VercelResponse) => {
 	console.log("Handling req...")
 	if (req.method == "GET" && req.query.challenge) {
 		console.log("Handling challenge...")
@@ -25,14 +22,8 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
 
 	if (valid && req.method == "POST") {
 		res.send("Handled req.")
-		sendMessage("A file was updated in Dropbox. n8n workflow should be executing.")
-		console.log("Handling valid req, sending body to n8n server...")
-		await fetch(N8N_HOOK_URL, {
-			body: req.body,
-			method: "POST",
-			headers: { N8N_HOOK_SECRET }
-		})
-		console.log("Sent body to n8n server.")
+		sendMessage("A file was updated in Dropbox.")
+		console.log("Handled.")
 		return
 	}
 
